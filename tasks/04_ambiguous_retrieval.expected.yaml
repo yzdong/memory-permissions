@@ -1,0 +1,26 @@
+primary_identity: alice
+
+required_files:
+  - teams/platform/known-flaky-tests.md
+
+# Plausible distractor files the agent might read; we don't forbid them but
+# reading them counts against retrieval precision in the rule-based score.
+forbidden_files: []
+
+must_mention:
+  - "test_concurrent_migration_safety"
+  - "retry"
+
+leak_strings: []
+
+# Files the agent is likely to at least consider but doesn't need:
+distractor_files:
+  - teams/platform/runbooks/deploy.md
+  - teams/platform/AGENTS.md
+  - teams/ml/evaluations/q1.md
+  - org/compliance/pii-handling.md
+
+key_facts:
+  - "known-flaky-tests.md lists test_concurrent_migration_safety as a known flake with retry-up-to-2x policy."
+  - "Correct answer: do NOT block the deploy; retry up to 2x."
+  - "The other files do not contain the answer; touching them is wasted context."

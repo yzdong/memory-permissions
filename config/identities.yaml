@@ -1,0 +1,14 @@
+# Identity -> group membership.
+#
+# The `all` group is implicit for everyone: it models the org-wide readable
+# tier. The backend should always add "all" to the effective group list.
+
+identities:
+  alice:
+    groups: [alice, platform, ml]   # on platform and ml, NOT finance
+  bob:
+    groups: [bob, platform]          # platform only
+  carol:
+    groups: [carol, finance]         # finance only
+  dana:
+    groups: [dana, ml]               # ml only

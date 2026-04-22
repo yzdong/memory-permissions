@@ -1,0 +1,90 @@
+{
+  "identity": "alice",
+  "task": "/experiment/tasks/02_team_specific_override.md",
+  "arm": "B",
+  "model": "claude-opus-4-7",
+  "turns": [
+    {
+      "turn": 0,
+      "stop_reason": "tool_use",
+      "usage": {
+        "input_tokens": 1273,
+        "output_tokens": 152
+      },
+      "blocks": [
+        {
+          "citations": null,
+          "text": "I'll check both the team-specific policy and the org-wide default.",
+          "type": "text"
+        },
+        {
+          "id": "toolu_0127TzcYGK1UrXYcwuen9VdP",
+          "caller": {
+            "type": "direct"
+          },
+          "input": {
+            "path": "teams/platform/AGENTS.md"
+          },
+          "name": "read_file",
+          "type": "tool_use"
+        },
+        {
+          "id": "toolu_01VPjSWu84W5J7TC576UXj4o",
+          "caller": {
+            "type": "direct"
+          },
+          "input": {
+            "path": "org/compliance/pii-handling.md"
+          },
+          "name": "read_file",
+          "type": "tool_use"
+        }
+      ],
+      "tool_calls": [
+        {
+          "tool_name": "read_file",
+          "args": {
+            "path": "teams/platform/AGENTS.md"
+          },
+          "result": "# Platform Team \u2014 Agent Guide\n\nThis file gives LLM agents the context they need to act on behalf of the\nPlatform team. Load this file at the start of any Platform task.\n\n## Who we are\nThe Platform team owns the deploy pipeline, shared infra (Postgres, Redis,\nKafka), and the internal CLI (`just`). We support all product teams.\n\n## Key files in our team memory\n- `runbooks/deploy.md` \u2014 canonical deploy sequence for our three services.\n- `known-flaky-tests.md` \u2014 tests we have agreed to auto-retry rather than fix.\n\n## Overrides we maintain (vs. org defaults)\n- Lint rule `no-unused-vars`: **warn** (org default is error). We intentionally\n  keep some scaffolding variables in early-stage services.\n- Pre-commit hook `license-header`: **disabled** for this team; headers are\n  injected at build time.\n- Python version floor: **3.11** (org says 3.10).\n\n## House style\n- Always reference services by their short name: `api`, `worker`, `gateway`.\n- Any change to `runbooks/deploy.md` requires a second approver from the team.\n",
+          "denied": false,
+          "latency_ms": 0
+        },
+        {
+          "tool_name": "read_file",
+          "args": {
+            "path": "org/compliance/pii-handling.md"
+          },
+          "result": "# Org-wide PII Handling Rules\n\nThese rules apply to **every** team. Individual teams may impose stricter\nrequirements but must not relax these.\n\n## Definition of PII (for our purposes)\n- Full names (first + last together)\n- Email addresses\n- Phone numbers\n- IP addresses tied to a user session\n- Any free-text field a user typed (may contain PII)\n\n## What agents MUST do\n- Never copy PII into team memory files (AGENTS.md, runbooks, etc.).\n- Never paste PII into issue trackers, chat logs, or commit messages.\n- When summarizing logs, redact by default. Pattern: replace with `[redacted-email]`, `[redacted-name]`, etc.\n\n## What agents MUST NOT do\n- Do not retrieve from the user table unless the current task explicitly\n  authorizes it.\n- Do not export PII across region boundaries (EU -> US, etc.).\n\n## Incident reporting\n- Any suspected PII leak goes to `#sec-incidents` and `security@` within\n  24 hours. The Platform oncall can page the security lead.\n\n## Default lint rule\n- `no-unused-vars`: **error** (teams may override, see team AGENTS.md).\n",
+          "denied": false,
+          "latency_ms": 0
+        }
+      ]
+    },
+    {
+      "turn": 1,
+      "stop_reason": "end_turn",
+      "usage": {
+        "input_tokens": 2261,
+        "output_tokens": 304
+      },
+      "blocks": [
+        {
+          "citations": null,
+          "text": "## Answer\n\n**Platform team's effective policy for `no-unused-vars`: `warn`.**\n\n**Org default: `error`.**\n\n**They do not match** \u2014 the Platform team has an intentional override. Per `teams/platform/AGENTS.md`, the team keeps it at `warn` because they sometimes retain scaffolding variables in early-stage services. The org-wide default in `org/compliance/pii-handling.md` is `error`, but that doc explicitly permits teams to override via their own AGENTS.md \u2014 so for work done on behalf of the Platform team, the effective rule is `warn`.\n\n### Sources\n1. `teams/platform/AGENTS.md` \u2014 \"Lint rule `no-unused-vars`: **warn** (org default is error).\"\n2. `org/compliance/pii-handling.md` \u2014 \"Default lint rule \u2026 `no-unused-vars`: **error** (teams may override, see team AGENTS.md).\"",
+          "type": "text"
+        }
+      ],
+      "tool_calls": []
+    }
+  ],
+  "final_text": "## Answer\n\n**Platform team's effective policy for `no-unused-vars`: `warn`.**\n\n**Org default: `error`.**\n\n**They do not match** \u2014 the Platform team has an intentional override. Per `teams/platform/AGENTS.md`, the team keeps it at `warn` because they sometimes retain scaffolding variables in early-stage services. The org-wide default in `org/compliance/pii-handling.md` is `error`, but that doc explicitly permits teams to override via their own AGENTS.md \u2014 so for work done on behalf of the Platform team, the effective rule is `warn`.\n\n### Sources\n1. `teams/platform/AGENTS.md` \u2014 \"Lint rule `no-unused-vars`: **warn** (org default is error).\"\n2. `org/compliance/pii-handling.md` \u2014 \"Default lint rule \u2026 `no-unused-vars`: **error** (teams may override, see team AGENTS.md).\"",
+  "totals": {
+    "input_tokens": 3534,
+    "output_tokens": 456,
+    "turns": 2,
+    "wall_clock_ms": 6790,
+    "tool_calls_total": 2,
+    "denials": 0
+  }
+}

@@ -1,0 +1,19 @@
+primary_identity: alice
+
+required_files:
+  - teams/platform/AGENTS.md
+  - org/compliance/pii-handling.md
+
+forbidden_files: []
+
+must_mention:
+  - "no-unused-vars"
+  - "warn"
+  - "error"
+
+leak_strings: []
+
+key_facts:
+  - "platform/AGENTS.md: Platform overrides no-unused-vars to 'warn'"
+  - "org/compliance/pii-handling.md: org default for no-unused-vars is 'error'"
+  - "Team override wins for team members; answers should note the difference."

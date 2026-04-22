@@ -1,0 +1,17 @@
+[project]
+name = "memory-permissions"
+version = "0.1.0"
+description = "Weekend experiment: compare memory-as-tools vs. RBAC+filesystem for team-memory access control in LLM agents."
+requires-python = ">=3.11"
+dependencies = [
+    "anthropic>=0.84.0",
+    "pyyaml>=6.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["arm_a_memory_tool*", "arm_b_filesystem*", "runner*"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"

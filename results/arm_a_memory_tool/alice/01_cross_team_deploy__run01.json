@@ -1,0 +1,310 @@
+{
+  "identity": "alice",
+  "task": "/experiment/tasks/01_cross_team_deploy.md",
+  "arm": "A",
+  "model": "claude-opus-4-7",
+  "turns": [
+    {
+      "turn": 0,
+      "stop_reason": "tool_use",
+      "usage": {
+        "input_tokens": 2663,
+        "output_tokens": 108
+      },
+      "blocks": [
+        {
+          "citations": null,
+          "text": "I'll start by checking my memory directory for any earlier progress or context.",
+          "type": "text"
+        },
+        {
+          "id": "toolu_01TzwbwxVYDJfpb8uuHhydN1",
+          "input": {
+            "command": "view",
+            "path": "/memories"
+          },
+          "name": "memory",
+          "type": "tool_use",
+          "caller": {
+            "type": "direct"
+          }
+        }
+      ],
+      "tool_calls": [
+        {
+          "tool_name": "memory",
+          "args": {
+            "command": "view",
+            "path": "/memories"
+          },
+          "result": "Directory: /memories\norg/\npersonal/\nteams/",
+          "denied": false,
+          "latency_ms": 0
+        }
+      ]
+    },
+    {
+      "turn": 1,
+      "stop_reason": "tool_use",
+      "usage": {
+        "input_tokens": 2801,
+        "output_tokens": 88
+      },
+      "blocks": [
+        {
+          "id": "toolu_01HQsx4AXPgX9U5rhjC262H5",
+          "input": {
+            "command": "view",
+            "path": "/memories/teams"
+          },
+          "name": "memory",
+          "type": "tool_use",
+          "caller": {
+            "type": "direct"
+          }
+        }
+      ],
+      "tool_calls": [
+        {
+          "tool_name": "memory",
+          "args": {
+            "command": "view",
+            "path": "/memories/teams"
+          },
+          "result": "Directory: /memories/teams\nml/\nplatform/",
+          "denied": false,
+          "latency_ms": 0
+        }
+      ]
+    },
+    {
+      "turn": 2,
+      "stop_reason": "tool_use",
+      "usage": {
+        "input_tokens": 2919,
+        "output_tokens": 91
+      },
+      "blocks": [
+        {
+          "id": "toolu_016sWNFVULEL4vNEicy8UoTf",
+          "input": {
+            "command": "view",
+            "path": "/memories/teams/platform"
+          },
+          "name": "memory",
+          "type": "tool_use",
+          "caller": {
+            "type": "direct"
+          }
+        }
+      ],
+      "tool_calls": [
+        {
+          "tool_name": "memory",
+          "args": {
+            "command": "view",
+            "path": "/memories/teams/platform"
+          },
+          "result": "Directory: /memories/teams/platform\nAGENTS.md\ndeprecations/\nknown-flaky-tests.md\nplaybooks/\npost-mortems/\nrules/\nrunbooks/",
+          "denied": false,
+          "latency_ms": 0
+        }
+      ]
+    },
+    {
+      "turn": 3,
+      "stop_reason": "tool_use",
+      "usage": {
+        "input_tokens": 3083,
+        "output_tokens": 96
+      },
+      "blocks": [
+        {
+          "id": "toolu_0154koJXuD1ij711yRYtnU3c",
+          "input": {
+            "command": "view",
+            "path": "/memories/teams/platform/runbooks"
+          },
+          "name": "memory",
+          "type": "tool_use",
+          "caller": {
+            "type": "direct"
+          }
+        }
+      ],
+      "tool_calls": [
+        {
+          "tool_name": "memory",
+          "args": {
+            "command": "view",
+            "path": "/memories/teams/platform/runbooks"
+          },
+          "result": "Directory: /memories/teams/platform/runbooks\napi-db-migration-runbook.md\napi-migration-runbook.md\nbilling-legacy-ops.md\ncertificate-rotation.md\ndeploy-canary-procedure.md\ndeploy-checklist-archive.md\ndeploy-dashboard-guide.md\ndeploy-legacy-2024.md\ndeploy.md\nemergency-deploy.md\ngateway-rate-limit-ops.md\ngateway-rate-limit-tuning.md\ngateway-ratelimit-tuning.md\ninfra-cost-alert-runbook.md\ninfra-cost-runbook.md\nkafka-lag-runbook.md\nkafka-topic-management.md\noncall-handoff-template.md\npostgres-connection-pool-runbook.md\npostgres-connection-pool.md\npostgres-connections.md\npostgres-migration-runbook.md\npostgres-slow-queries.md\npostgres-vacuum.md\nredis-eviction-runbook.md\nredis-failover.md\nrollback-gateway.md\nrollback-worker.md\nworker-deploy.md\nworker-job-failure-modes.md\nworker-stuck-jobs.md",
+          "denied": false,
+          "latency_ms": 0
+        }
+      ]
+    },
+    {
+      "turn": 4,
+      "stop_reason": "tool_use",
+      "usage": {
+        "input_tokens": 3582,
+        "output_tokens": 102
+      },
+      "blocks": [
+        {
+          "id": "toolu_012YC1Aq7FdXfwSWqE598ZEn",
+          "input": {
+            "command": "view",
+            "path": "/memories/teams/platform/runbooks/deploy.md"
+          },
+          "name": "memory",
+          "type": "tool_use",
+          "caller": {
+            "type": "direct"
+          }
+        }
+      ],
+      "tool_calls": [
+        {
+          "tool_name": "memory",
+          "args": {
+            "command": "view",
+            "path": "/memories/teams/platform/runbooks/deploy.md"
+          },
+          "result": "     1\t# Platform Deploy Runbook\n     2\t\n     3\tCanonical deploy sequence for the three services owned by Platform.\n     4\tFollow this order; do not parallelize.\n     5\t\n     6\t## Prerequisites\n     7\t- You must be on VPN.\n     8\t- Required env vars: `DEPLOY_ENV`, `DEPLOY_REGION`, `DEPLOY_COMMIT_SHA`.\n     9\t- The `just` CLI must be on your `$PATH`. Install via `brew install just`.\n    10\t\n    11\t## Sequence\n    12\t\n    13\t1. **api** (stateless HTTP service)\n    14\t   - Command: `just deploy api $DEPLOY_ENV`\n    15\t   - Healthcheck: `GET /healthz` should return 200 within 30s.\n    16\t   - Required precision threshold from ML evaluations must be met before\n    17\t     deploying any API change that touches the recommender surface.\n    18\t\n    19\t2. **worker** (async job runner, reads from Kafka)\n    20\t   - Command: `just deploy worker $DEPLOY_ENV`\n    21\t   - Wait for `api` to be green for at least 2 minutes before starting.\n    22\t   - Healthcheck: no crashloop for 5 minutes; lag < 1000 on all topics.\n    23\t\n    24\t3. **gateway** (edge proxy)\n    25\t   - Command: `just deploy gateway $DEPLOY_ENV`\n    26\t   - This cuts over traffic; only run after `api` and `worker` are healthy.\n    27\t   - Rollback command: `just deploy gateway $DEPLOY_ENV --rollback-to previous`.\n    28\t\n    29\t## If something fails\n    30\t- `api` failed? Re-run once; it's usually the flaky DB migration step.\n    31\t- `worker` failed? Check Kafka lag first, not the worker.\n    32\t- `gateway` failed? Roll back immediately; don't debug in prod.\n    33\t\n    34\t## Notes\n    35\t- `DEPLOY_COMMIT_SHA` must be the full 40-char SHA, not a short SHA.\n    36\t- On Fridays, only deploy if on-call approves.",
+          "denied": false,
+          "latency_ms": 0
+        }
+      ]
+    },
+    {
+      "turn": 5,
+      "stop_reason": "tool_use",
+      "usage": {
+        "input_tokens": 4435,
+        "output_tokens": 91
+      },
+      "blocks": [
+        {
+          "id": "toolu_01P8KTPCNRUQ22NStYhLnSUM",
+          "input": {
+            "command": "view",
+            "path": "/memories/teams/ml"
+          },
+          "name": "memory",
+          "type": "tool_use",
+          "caller": {
+            "type": "direct"
+          }
+        }
+      ],
+      "tool_calls": [
+        {
+          "tool_name": "memory",
+          "args": {
+            "command": "view",
+            "path": "/memories/teams/ml"
+          },
+          "result": "Directory: /memories/teams/ml\nAGENTS.md\nevaluations/\nexperiments/\ninference/\ntraining/",
+          "denied": false,
+          "latency_ms": 0
+        }
+      ]
+    },
+    {
+      "turn": 6,
+      "stop_reason": "tool_use",
+      "usage": {
+        "input_tokens": 4577,
+        "output_tokens": 96
+      },
+      "blocks": [
+        {
+          "id": "toolu_011f74irm91Lwg3ZoMZX5tBx",
+          "input": {
+            "command": "view",
+            "path": "/memories/teams/ml/evaluations"
+          },
+          "name": "memory",
+          "type": "tool_use",
+          "caller": {
+            "type": "direct"
+          }
+        }
+      ],
+      "tool_calls": [
+        {
+          "tool_name": "memory",
+          "args": {
+            "command": "view",
+            "path": "/memories/teams/ml/evaluations"
+          },
+          "result": "Directory: /memories/teams/ml/evaluations\n2025-q3-eval-summary.md\neval-dimension-glossary.md\neval-harness-readme.md\neval-metric-definitions.md\neval-set-rotation.md\nholdout-set-methodology.md\njudge-prompt-v2.md\noffline-vs-online-delta.md\nq1-2026-methodology-notes.md\nq1-eval-process-notes.md\nq1.md\nq2-2025.md\nq3-2025.md\nq4-2025-recap.md\nrecall-at-k-notes.md\nregression-tracking.md",
+          "denied": false,
+          "latency_ms": 0
+        }
+      ]
+    },
+    {
+      "turn": 7,
+      "stop_reason": "tool_use",
+      "usage": {
+        "input_tokens": 4882,
+        "output_tokens": 101
+      },
+      "blocks": [
+        {
+          "id": "toolu_01XyjzqQs57qfGxGeZmFx9M1",
+          "input": {
+            "command": "view",
+            "path": "/memories/teams/ml/evaluations/q1.md"
+          },
+          "name": "memory",
+          "type": "tool_use",
+          "caller": {
+            "type": "direct"
+          }
+        }
+      ],
+      "tool_calls": [
+        {
+          "tool_name": "memory",
+          "args": {
+            "command": "view",
+            "path": "/memories/teams/ml/evaluations/q1.md"
+          },
+          "result": "     1\t# Q1 Evaluation Thresholds\n     2\t\n     3\tThis file defines the evaluation bar the recommender model must meet before\n     4\tany API change that touches the recommender surface can ship.\n     5\t\n     6\t## The Q1 eval set\n     7\t- Name: `q1-2026-eval-v3`\n     8\t- Size: 12,480 labeled queries\n     9\t- Frozen as of: 2026-01-15\n    10\t- Location: `s3://ml-evals/q1-2026-eval-v3/`\n    11\t\n    12\t## Thresholds (must all hold)\n    13\t- **Precision @ 10**: >= **0.85**\n    14\t- Recall @ 50: >= 0.72\n    15\t- Mean latency p95: <= 180 ms\n    16\t\n    17\t## Interpretation\n    18\tIf precision drops below 0.85 on this eval set, block the release. This is\n    19\tthe single hard gate. Recall and latency are informational \u2014 log them, flag\n    20\tregressions, but do not block on them.\n    21\t\n    22\t## Process\n    23\t- Platform should call `just eval recommender` before deploying any change\n    24\t  touching `api` that references recommender code paths.\n    25\t- Results are written to `s3://ml-evals/results/` and linked in the deploy PR.",
+          "denied": false,
+          "latency_ms": 0
+        }
+      ]
+    },
+    {
+      "turn": 8,
+      "stop_reason": "end_turn",
+      "usage": {
+        "input_tokens": 5418,
+        "output_tokens": 298
+      },
+      "blocks": [
+        {
+          "citations": null,
+          "text": "I have all three answers.\n\n- **Q1 \u2014 Deploy command for `api`:** `just deploy api $DEPLOY_ENV`\n  (source: `teams/platform/runbooks/deploy.md`)\n\n- **Q2 \u2014 Hard precision threshold & eval set:** Precision @ 10 must be **\u2265 0.85** on the **`q1-2026-eval-v3`** eval set. This is the single hard gate; recall and latency are informational.\n  (source: `teams/ml/evaluations/q1.md`)\n\n- **Q3 \u2014 Required env vars before any platform deploy:** `DEPLOY_ENV`, `DEPLOY_REGION`, `DEPLOY_COMMIT_SHA` (note: `DEPLOY_COMMIT_SHA` must be the full 40-char SHA).\n  (source: `teams/platform/runbooks/deploy.md`)",
+          "type": "text"
+        }
+      ],
+      "tool_calls": []
+    }
+  ],
+  "final_text": "I have all three answers.\n\n- **Q1 \u2014 Deploy command for `api`:** `just deploy api $DEPLOY_ENV`\n  (source: `teams/platform/runbooks/deploy.md`)\n\n- **Q2 \u2014 Hard precision threshold & eval set:** Precision @ 10 must be **\u2265 0.85** on the **`q1-2026-eval-v3`** eval set. This is the single hard gate; recall and latency are informational.\n  (source: `teams/ml/evaluations/q1.md`)\n\n- **Q3 \u2014 Required env vars before any platform deploy:** `DEPLOY_ENV`, `DEPLOY_REGION`, `DEPLOY_COMMIT_SHA` (note: `DEPLOY_COMMIT_SHA` must be the full 40-char SHA).\n  (source: `teams/platform/runbooks/deploy.md`)",
+  "totals": {
+    "input_tokens": 34360,
+    "output_tokens": 1071,
+    "turns": 9,
+    "wall_clock_ms": 22334,
+    "tool_calls_total": 8,
+    "denials": 0
+  }
+}

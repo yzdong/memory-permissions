@@ -1,0 +1,90 @@
+{
+  "identity": "alice",
+  "task": "/experiment/tasks/01_cross_team_deploy.md",
+  "arm": "B",
+  "model": "claude-opus-4-7",
+  "turns": [
+    {
+      "turn": 0,
+      "stop_reason": "tool_use",
+      "usage": {
+        "input_tokens": 1472,
+        "output_tokens": 157
+      },
+      "blocks": [
+        {
+          "citations": null,
+          "text": "I'll consult the relevant team memory files to answer these questions.",
+          "type": "text"
+        },
+        {
+          "id": "toolu_01P3RVwfZRiXXWKqFq5u3Sst",
+          "caller": {
+            "type": "direct"
+          },
+          "input": {
+            "path": "teams/platform/runbooks/deploy.md"
+          },
+          "name": "read_file",
+          "type": "tool_use"
+        },
+        {
+          "id": "toolu_01QpVAE1qLZgvz4QuzrR5pHz",
+          "caller": {
+            "type": "direct"
+          },
+          "input": {
+            "path": "teams/ml/evaluations/q1.md"
+          },
+          "name": "read_file",
+          "type": "tool_use"
+        }
+      ],
+      "tool_calls": [
+        {
+          "tool_name": "read_file",
+          "args": {
+            "path": "teams/platform/runbooks/deploy.md"
+          },
+          "result": "# Platform Deploy Runbook\n\nCanonical deploy sequence for the three services owned by Platform.\nFollow this order; do not parallelize.\n\n## Prerequisites\n- You must be on VPN.\n- Required env vars: `DEPLOY_ENV`, `DEPLOY_REGION`, `DEPLOY_COMMIT_SHA`.\n- The `just` CLI must be on your `$PATH`. Install via `brew install just`.\n\n## Sequence\n\n1. **api** (stateless HTTP service)\n   - Command: `just deploy api $DEPLOY_ENV`\n   - Healthcheck: `GET /healthz` should return 200 within 30s.\n   - Required precision threshold from ML evaluations must be met before\n     deploying any API change that touches the recommender surface.\n\n2. **worker** (async job runner, reads from Kafka)\n   - Command: `just deploy worker $DEPLOY_ENV`\n   - Wait for `api` to be green for at least 2 minutes before starting.\n   - Healthcheck: no crashloop for 5 minutes; lag < 1000 on all topics.\n\n3. **gateway** (edge proxy)\n   - Command: `just deploy gateway $DEPLOY_ENV`\n   - This cuts over traffic; only run after `api` and `worker` are healthy.\n   - Rollback command: `just deploy gateway $DEPLOY_ENV --rollback-to previous`.\n\n## If something fails\n- `api` failed? Re-run once; it's usually the flaky DB migration step.\n- `worker` failed? Check Kafka lag first, not the worker.\n- `gateway` failed? Roll back immediately; don't debug in prod.\n\n## Notes\n- `DEPLOY_COMMIT_SHA` must be the full 40-char SHA, not a short SHA.\n- On Fridays, only deploy if on-call approves.\n",
+          "denied": false,
+          "latency_ms": 0
+        },
+        {
+          "tool_name": "read_file",
+          "args": {
+            "path": "teams/ml/evaluations/q1.md"
+          },
+          "result": "# Q1 Evaluation Thresholds\n\nThis file defines the evaluation bar the recommender model must meet before\nany API change that touches the recommender surface can ship.\n\n## The Q1 eval set\n- Name: `q1-2026-eval-v3`\n- Size: 12,480 labeled queries\n- Frozen as of: 2026-01-15\n- Location: `s3://ml-evals/q1-2026-eval-v3/`\n\n## Thresholds (must all hold)\n- **Precision @ 10**: >= **0.85**\n- Recall @ 50: >= 0.72\n- Mean latency p95: <= 180 ms\n\n## Interpretation\nIf precision drops below 0.85 on this eval set, block the release. This is\nthe single hard gate. Recall and latency are informational \u2014 log them, flag\nregressions, but do not block on them.\n\n## Process\n- Platform should call `just eval recommender` before deploying any change\n  touching `api` that references recommender code paths.\n- Results are written to `s3://ml-evals/results/` and linked in the deploy PR.\n",
+          "denied": false,
+          "latency_ms": 0
+        }
+      ]
+    },
+    {
+      "turn": 1,
+      "stop_reason": "end_turn",
+      "usage": {
+        "input_tokens": 2658,
+        "output_tokens": 376
+      },
+      "blocks": [
+        {
+          "citations": null,
+          "text": "## Cross-team deploy check \u2014 recommender API\n\n- **Q1 \u2014 Deploy command for `api`:** `just deploy api $DEPLOY_ENV` *(teams/platform/runbooks/deploy.md)*\n- **Q2 \u2014 Hard precision gate:** Precision @ 10 must be **\u2265 0.85**, evaluated on the **`q1-2026-eval-v3`** eval set (12,480 labeled queries, frozen 2026-01-15). This is the single hard blocker; recall/latency are informational. *(teams/ml/evaluations/q1.md)*\n- **Q3 \u2014 Required env vars before any platform deploy:** `DEPLOY_ENV`, `DEPLOY_REGION`, `DEPLOY_COMMIT_SHA` (note: `DEPLOY_COMMIT_SHA` must be the full 40-char SHA). *(teams/platform/runbooks/deploy.md)*\n\nReminder from the runbook: run `just eval recommender` to generate the eval result (linked in the deploy PR) before shipping, and respect the deploy order api \u2192 worker \u2192 gateway.",
+          "type": "text"
+        }
+      ],
+      "tool_calls": []
+    }
+  ],
+  "final_text": "## Cross-team deploy check \u2014 recommender API\n\n- **Q1 \u2014 Deploy command for `api`:** `just deploy api $DEPLOY_ENV` *(teams/platform/runbooks/deploy.md)*\n- **Q2 \u2014 Hard precision gate:** Precision @ 10 must be **\u2265 0.85**, evaluated on the **`q1-2026-eval-v3`** eval set (12,480 labeled queries, frozen 2026-01-15). This is the single hard blocker; recall/latency are informational. *(teams/ml/evaluations/q1.md)*\n- **Q3 \u2014 Required env vars before any platform deploy:** `DEPLOY_ENV`, `DEPLOY_REGION`, `DEPLOY_COMMIT_SHA` (note: `DEPLOY_COMMIT_SHA` must be the full 40-char SHA). *(teams/platform/runbooks/deploy.md)*\n\nReminder from the runbook: run `just eval recommender` to generate the eval result (linked in the deploy PR) before shipping, and respect the deploy order api \u2192 worker \u2192 gateway.",
+  "totals": {
+    "input_tokens": 4130,
+    "output_tokens": 533,
+    "turns": 2,
+    "wall_clock_ms": 7740,
+    "tool_calls_total": 2,
+    "denials": 0
+  }
+}

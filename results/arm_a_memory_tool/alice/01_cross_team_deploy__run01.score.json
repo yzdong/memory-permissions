@@ -1,0 +1,45 @@
+{
+  "identity": "alice",
+  "is_primary_identity": true,
+  "arm": "A",
+  "task": "/experiment/tasks/01_cross_team_deploy.md",
+  "rule_based": {
+    "correctness": true,
+    "files_successfully_read": [
+      "teams/ml/evaluations/q1.md",
+      "teams/platform/runbooks/deploy.md"
+    ],
+    "denied_paths": [],
+    "required_hits": [
+      "teams/ml/evaluations/q1.md",
+      "teams/platform/runbooks/deploy.md"
+    ],
+    "required_misses": [],
+    "forbidden_accessed": [],
+    "noise_files": [],
+    "must_mention_applied": true,
+    "must_mention_hits": [
+      "just deploy api",
+      "0.85",
+      "q1-2026-eval-v3",
+      "DEPLOY_ENV",
+      "DEPLOY_REGION",
+      "DEPLOY_COMMIT_SHA"
+    ],
+    "must_mention_misses": [],
+    "leak_applied": false,
+    "leak_hits": [],
+    "retrieval_recall": 1.0,
+    "retrieval_precision": 1.0
+  },
+  "totals": {
+    "input_tokens": 34360,
+    "output_tokens": 1071,
+    "turns": 9,
+    "wall_clock_ms": 22334,
+    "tool_calls_total": 8,
+    "denials": 0
+  },
+  "judge": null,
+  "log_path": "/experiment/results/arm_a_memory_tool/alice/01_cross_team_deploy__run01.json"
+}

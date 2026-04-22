@@ -1,0 +1,39 @@
+{
+  "identity": "bob",
+  "is_primary_identity": false,
+  "arm": "B",
+  "task": "/experiment/tasks/04_ambiguous_retrieval.md",
+  "rule_based": {
+    "correctness": true,
+    "files_successfully_read": [
+      "teams/platform/known-flaky-tests.md"
+    ],
+    "denied_paths": [],
+    "required_hits": [
+      "teams/platform/known-flaky-tests.md"
+    ],
+    "required_misses": [],
+    "forbidden_accessed": [],
+    "noise_files": [],
+    "must_mention_applied": false,
+    "must_mention_hits": [
+      "test_concurrent_migration_safety",
+      "retry"
+    ],
+    "must_mention_misses": [],
+    "leak_applied": true,
+    "leak_hits": [],
+    "retrieval_recall": 1.0,
+    "retrieval_precision": 1.0
+  },
+  "totals": {
+    "input_tokens": 3297,
+    "output_tokens": 341,
+    "turns": 2,
+    "wall_clock_ms": 6433,
+    "tool_calls_total": 1,
+    "denials": 0
+  },
+  "judge": null,
+  "log_path": "/experiment/results/arm_b_filesystem/bob/04_ambiguous_retrieval__run01.json"
+}

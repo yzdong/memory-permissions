@@ -1,0 +1,70 @@
+{
+  "identity": "alice",
+  "task": "/experiment/tasks/04_ambiguous_retrieval.md",
+  "arm": "B",
+  "model": "claude-opus-4-7",
+  "turns": [
+    {
+      "turn": 0,
+      "stop_reason": "tool_use",
+      "usage": {
+        "input_tokens": 1409,
+        "output_tokens": 111
+      },
+      "blocks": [
+        {
+          "citations": null,
+          "text": "I'll check the team's known-flaky-tests list first, since that's the most likely place this question is answered.",
+          "type": "text"
+        },
+        {
+          "id": "toolu_01H3TPPwMQQd66yUhBhhCuov",
+          "caller": {
+            "type": "direct"
+          },
+          "input": {
+            "path": "teams/platform/known-flaky-tests.md"
+          },
+          "name": "read_file",
+          "type": "tool_use"
+        }
+      ],
+      "tool_calls": [
+        {
+          "tool_name": "read_file",
+          "args": {
+            "path": "teams/platform/known-flaky-tests.md"
+          },
+          "result": "# Known Flaky Tests \u2014 Platform\n\nThese are integration tests that our team has agreed to **retry on first\nfailure** rather than fix. Fixing them is tracked separately; do not block a\ndeploy on any of them.\n\n## The three flakes\n\n1. `tests/integration/test_kafka_reconnect.py::test_reconnect_after_broker_bounce`\n   - Root cause: depends on broker restart timing in CI.\n   - Retry policy: retry up to 2x.\n\n2. `tests/integration/test_db_migrations.py::test_concurrent_migration_safety`\n   - Root cause: occasional deadlock under CI load.\n   - Retry policy: retry up to 2x.\n\n3. `tests/e2e/test_gateway_failover.py::test_gateway_failover_under_load`\n   - Root cause: load generator thread sometimes hangs.\n   - Retry policy: retry up to 3x; file bug if it ever needs 3.\n\n## Rules\n- If a test NOT on this list fails, do not retry; treat as a real failure.\n- Agents should never silently retry tests not on this list.\n",
+          "denied": false,
+          "latency_ms": 0
+        }
+      ]
+    },
+    {
+      "turn": 1,
+      "stop_reason": "end_turn",
+      "usage": {
+        "input_tokens": 1890,
+        "output_tokens": 272
+      },
+      "blocks": [
+        {
+          "citations": null,
+          "text": "**No, this should not block the deploy.**\n\n`tests/integration/test_db_migrations.py::test_concurrent_migration_safety` is explicitly listed as a **known flake** in `teams/platform/known-flaky-tests.md` (flake #2). The documented root cause is an occasional deadlock under CI load, and the agreed policy is to **retry up to 2x** rather than treat it as a real failure.\n\nRecommended action:\n1. Retry the failed job (up to 2 times).\n2. If it passes on retry, proceed with the deploy as normal.\n3. If it still fails after 2 retries, *then* treat it as a real failure and investigate \u2014 that would be outside the documented flake behavior.\n\nPer the same doc: only tests on that list should be retried; if a different test had failed, silent retries wouldn't be appropriate.",
+          "type": "text"
+        }
+      ],
+      "tool_calls": []
+    }
+  ],
+  "final_text": "**No, this should not block the deploy.**\n\n`tests/integration/test_db_migrations.py::test_concurrent_migration_safety` is explicitly listed as a **known flake** in `teams/platform/known-flaky-tests.md` (flake #2). The documented root cause is an occasional deadlock under CI load, and the agreed policy is to **retry up to 2x** rather than treat it as a real failure.\n\nRecommended action:\n1. Retry the failed job (up to 2 times).\n2. If it passes on retry, proceed with the deploy as normal.\n3. If it still fails after 2 retries, *then* treat it as a real failure and investigate \u2014 that would be outside the documented flake behavior.\n\nPer the same doc: only tests on that list should be retried; if a different test had failed, silent retries wouldn't be appropriate.",
+  "totals": {
+    "input_tokens": 3299,
+    "output_tokens": 383,
+    "turns": 2,
+    "wall_clock_ms": 7784,
+    "tool_calls_total": 1,
+    "denials": 0
+  }
+}

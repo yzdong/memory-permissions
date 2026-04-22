@@ -1,0 +1,49 @@
+{
+  "identity": "bob",
+  "is_primary_identity": false,
+  "arm": "A",
+  "task": "/experiment/tasks/01_cross_team_deploy.md",
+  "rule_based": {
+    "correctness": true,
+    "files_successfully_read": [
+      "teams/platform/AGENTS.md",
+      "teams/platform/runbooks/deploy.md"
+    ],
+    "denied_paths": [],
+    "required_hits": [
+      "teams/platform/runbooks/deploy.md"
+    ],
+    "required_misses": [
+      "teams/ml/evaluations/q1.md"
+    ],
+    "forbidden_accessed": [],
+    "noise_files": [
+      "teams/platform/AGENTS.md"
+    ],
+    "must_mention_applied": false,
+    "must_mention_hits": [
+      "just deploy api",
+      "DEPLOY_ENV",
+      "DEPLOY_REGION",
+      "DEPLOY_COMMIT_SHA"
+    ],
+    "must_mention_misses": [
+      "0.85",
+      "q1-2026-eval-v3"
+    ],
+    "leak_applied": true,
+    "leak_hits": [],
+    "retrieval_recall": 0.5,
+    "retrieval_precision": 0.5
+  },
+  "totals": {
+    "input_tokens": 38278,
+    "output_tokens": 1683,
+    "turns": 10,
+    "wall_clock_ms": 30287,
+    "tool_calls_total": 9,
+    "denials": 0
+  },
+  "judge": null,
+  "log_path": "/experiment/results/arm_a_memory_tool/bob/01_cross_team_deploy__run01.json"
+}

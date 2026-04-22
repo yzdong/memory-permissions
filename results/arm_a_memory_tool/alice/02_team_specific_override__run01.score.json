@@ -1,0 +1,42 @@
+{
+  "identity": "alice",
+  "is_primary_identity": true,
+  "arm": "A",
+  "task": "/experiment/tasks/02_team_specific_override.md",
+  "rule_based": {
+    "correctness": true,
+    "files_successfully_read": [
+      "org/compliance/pii-handling.md",
+      "teams/platform/AGENTS.md"
+    ],
+    "denied_paths": [],
+    "required_hits": [
+      "org/compliance/pii-handling.md",
+      "teams/platform/AGENTS.md"
+    ],
+    "required_misses": [],
+    "forbidden_accessed": [],
+    "noise_files": [],
+    "must_mention_applied": true,
+    "must_mention_hits": [
+      "no-unused-vars",
+      "warn",
+      "error"
+    ],
+    "must_mention_misses": [],
+    "leak_applied": false,
+    "leak_hits": [],
+    "retrieval_recall": 1.0,
+    "retrieval_precision": 1.0
+  },
+  "totals": {
+    "input_tokens": 25654,
+    "output_tokens": 1017,
+    "turns": 8,
+    "wall_clock_ms": 18905,
+    "tool_calls_total": 7,
+    "denials": 0
+  },
+  "judge": null,
+  "log_path": "/experiment/results/arm_a_memory_tool/alice/02_team_specific_override__run01.json"
+}

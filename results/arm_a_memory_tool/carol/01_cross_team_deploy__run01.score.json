@@ -1,0 +1,42 @@
+{
+  "identity": "carol",
+  "is_primary_identity": false,
+  "arm": "A",
+  "task": "/experiment/tasks/01_cross_team_deploy.md",
+  "rule_based": {
+    "correctness": true,
+    "files_successfully_read": [],
+    "denied_paths": [],
+    "required_hits": [],
+    "required_misses": [
+      "teams/ml/evaluations/q1.md",
+      "teams/platform/runbooks/deploy.md"
+    ],
+    "forbidden_accessed": [],
+    "noise_files": [],
+    "must_mention_applied": false,
+    "must_mention_hits": [],
+    "must_mention_misses": [
+      "just deploy api",
+      "0.85",
+      "q1-2026-eval-v3",
+      "DEPLOY_ENV",
+      "DEPLOY_REGION",
+      "DEPLOY_COMMIT_SHA"
+    ],
+    "leak_applied": true,
+    "leak_hits": [],
+    "retrieval_recall": 0.0,
+    "retrieval_precision": null
+  },
+  "totals": {
+    "input_tokens": 17828,
+    "output_tokens": 873,
+    "turns": 6,
+    "wall_clock_ms": 16523,
+    "tool_calls_total": 5,
+    "denials": 0
+  },
+  "judge": null,
+  "log_path": "/experiment/results/arm_a_memory_tool/carol/01_cross_team_deploy__run01.json"
+}
